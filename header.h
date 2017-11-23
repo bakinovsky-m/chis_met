@@ -39,6 +39,8 @@ void print(const Mat m);
 void print(const std::vector<ld> vec);
 void print_v(std::vector<ld>);
 
+std::vector<ld> normal(const std::vector<ld>);
+
 ld getDeterminant(const Mat old_matr);
 Mat getMWithoutIJ(const Mat mas, const int i, const int j);
 Mat getMWithIColChangedToSvobChlen(const Mat matr, const int index_stolba);

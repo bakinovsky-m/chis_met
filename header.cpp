@@ -436,6 +436,119 @@ pair<ld, vector<ld>> pmAlgorythm(const Mat& A0, const vector<ld> svobChleny) //Ñ
 	return l;
 } 
 
+// vector<pair<ld, vector<ld>>> powMethod(const Mat& A0, const vector<ld> svobChleny){
+// 	vector<pair<ld, vector<ld>>> res(0);
+// 	pair<ld, vector<ld>> res1(0, vector<ld>(0));
+// 	pair<ld, vector<ld>> res2(0, vector<ld>(0));
+// 	ld eps = 1e-5;
+
+// 	Mat A = A0;
+// 	vector<ld> y0 = svobChleny;
+// 	vector<ld> y1(y0.size(),0);
+
+	
+
+// 	bool done = false;
+
+// 	ld y_k_prev_iter = 0;
+// 	ld y_k = 0;
+
+// 	ld a_plus_1 = 1;
+// 	ld a = 1;
+// 	ld a_minus_1 = 1;
+
+// 	vector<ld> temp_cont(0);
+
+// 	int counter = 0;
+// 	done = false;
+// 	while(!done){
+// 	// while(fabs(a - y_k * a_minus_1) > eps){
+// 		// cout << "fabs: " << fabs(a - y_k * a_minus_1) << endl;
+// 		counter++;
+// 		if(counter > 31){
+// 			done = true;
+// 		}
+// 		y1 = unmMatNaVec(A, y0);
+
+// 		y_k = y1[0] / y0[0];
+// 		// cout<<"y_k = "<< y_k<<endl<<endl;
+// 		a_minus_1 = a;
+// 		a = a_plus_1;
+// 		a_plus_1 = y0[0];
+
+// 		ld temp = (a_plus_1 - (y_k * a)) / (a - (y_k * a_minus_1));
+
+
+// 		// cout << "(" << a_plus_1 << " - " << y_k << " * " << a << ") / (" << a << " - " << y_k << " * " << a_minus_1 << ")" << endl;
+// 		// cout << "temp: " << temp << endl;
+
+// 		temp_cont.push_back(temp);
+
+// 		y0 = y1;
+// 	}
+
+// 	y0 = svobChleny;
+// 	done = false;
+// 	y_k_prev_iter = 0;
+// 	while(!done){
+// 		// cout << "iter: " << counter << endl;
+
+// 		y1 = unmMatNaVec(A, y0);
+// 				for (int i = 0; i < y1.size(); ++i)
+// 		y_k = y1[0] / y0[0];
+
+// 		// cout<<"y1 = ";
+// 		// for (int i = 0; i < y1.size(); ++i)
+// 		// {
+// 		// 	cout<<y1[i]<<" ";		
+// 		// }
+// 		// cout<<endl;
+// 		// cout<<"y0 = ";
+// 		// for (int i = 0; i < y0.size(); ++i)
+// 		// {
+// 		// 	cout<<y0[i]<<" ";		
+// 		// }
+// 		// cout<<endl<<endl;
+
+// 		if(fabs(y_k - y_k_prev_iter) < eps){
+// 			done = true;
+// 			// break;
+// 		}
+// 		y_k_prev_iter = y_k;		
+// 		y0 = y1;
+// 	}
+
+// 	for(int i = 0; i < y1.size(); ++i){
+// 		y1[i] = y1[i] / y1[y1.size() - 1];
+// 	}
+
+// 	res1.first = y_k;
+
+// 	// y0 = svobChleny;
+// 	// y1 = 
+// 	// while(!done)
+// 	// {
+
+// 	// }
+
+// 	// res1.second = y1;
+
+// 	// res2.first = (a_plus_1 - (res1.first * a)) / (a - (res1.first * a_minus_1));
+// 	ld temp = 0;
+// 	for(int i = 0; i < temp_cont.size(); ++i){
+// 		// cout << "temp += " << temp_cont[i] << endl;
+// 		temp += temp_cont[i];
+// 	}
+// 	// cout << temp << " / " << temp_cont.size() << endl;
+// 	res2.first = temp / temp_cont.size();
+// 	res2.second = methodGauss(A, res2.first);
+
+// 	res.push_back(res1);
+// 	res.push_back(res2);
+
+// 	return res;
+// }
+
 vector<pair<ld, vector<ld>>> powMethod(const Mat& A0, const vector<ld> svobChleny){
 	vector<pair<ld, vector<ld>>> res(0);
 	pair<ld, vector<ld>> res1(0, vector<ld>(0));
@@ -531,7 +644,7 @@ vector<pair<ld, vector<ld>>> powMethod(const Mat& A0, const vector<ld> svobChlen
 
 	// }
 
-	// res1.second = y1;
+	res1.second = y1;
 
 	// res2.first = (a_plus_1 - (res1.first * a)) / (a - (res1.first * a_minus_1));
 	ld temp = 0;

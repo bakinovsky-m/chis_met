@@ -88,12 +88,15 @@ int main(){
 	auto p = powMethod(m2, m2[0]);
 	cout << "sobs ch 1: " << p[0].first << endl;
 	cout << "sobs vec 1: " << endl;
-	print(p[0].second);
+	auto ot = normal(p[0].second);
+	print(ot);
 	cout << endl;
 
-	cout << "sobs ch 2: " << p[1].first << endl;
+	p = powMethod(m_shit, m_shit[0]);
+	cout << "sobs ch 2: " << p[0].first << endl;
 	cout << "sobs vec 2: " << endl;
-	print(p[1].second);
+	ot = normal(p[0].second);
+	print(ot);
 	cout << endl;
 	// end 2 lab
 
