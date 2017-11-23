@@ -574,31 +574,7 @@ vector<pair<ld, vector<ld>>> powMethod(const Mat& A0, const vector<ld> svobChlen
 
 	int counter = 0;
 	done = false;
-	while(!done){
-	// while(fabs(a - y_k * a_minus_1) > eps){
-		// cout << "fabs: " << fabs(a - y_k * a_minus_1) << endl;
-		counter++;
-		if(counter > 31){
-			done = true;
-		}
-		y1 = unmMatNaVec(A, y0);
 
-		y_k = y1[0] / y0[0];
-		// cout<<"y_k = "<< y_k<<endl<<endl;
-		a_minus_1 = a;
-		a = a_plus_1;
-		a_plus_1 = y0[0];
-
-		ld temp = (a_plus_1 - (y_k * a)) / (a - (y_k * a_minus_1));
-
-
-		// cout << "(" << a_plus_1 << " - " << y_k << " * " << a << ") / (" << a << " - " << y_k << " * " << a_minus_1 << ")" << endl;
-		// cout << "temp: " << temp << endl;
-
-		temp_cont.push_back(temp);
-
-		y0 = y1;
-	}
 
 	y0 = svobChleny;
 	done = false;
@@ -627,13 +603,19 @@ vector<pair<ld, vector<ld>>> powMethod(const Mat& A0, const vector<ld> svobChlen
 			done = true;
 			// break;
 		}
-		y_k_prev_iter = y_k;		
+		y_k_prev_iter = y_k;
+
+		a_minus_1 = a;
+		a = a_plus_1;
+		a_plus_1 = y0[0];
+
 		y0 = y1;
 	}
 
 	for(int i = 0; i < y1.size(); ++i){
 		y1[i] = y1[i] / y1[y1.size() - 1];
 	}
+
 
 	res1.first = y_k;
 
@@ -646,14 +628,7 @@ vector<pair<ld, vector<ld>>> powMethod(const Mat& A0, const vector<ld> svobChlen
 
 	res1.second = y1;
 
-	// res2.first = (a_plus_1 - (res1.first * a)) / (a - (res1.first * a_minus_1));
-	ld temp = 0;
-	for(int i = 0; i < temp_cont.size(); ++i){
-		// cout << "temp += " << temp_cont[i] << endl;
-		temp += temp_cont[i];
-	}
-	// cout << temp << " / " << temp_cont.size() << endl;
-	res2.first = temp / temp_cont.size();
+
 	res2.second = methodGauss(A, res2.first);
 
 	res.push_back(res1);
