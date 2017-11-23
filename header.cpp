@@ -302,6 +302,253 @@ void LUdecompos(const Mat A, Mat &L, Mat &U){
 
 }
 
+void print_v(vector<ld> v) //Распечатка векторов
+{
+	for(int i = 0; i < v.size(); i++)
+	{
+		std::cout << v[i] << " ";
+	}
+	std::cout << std::endl;
+}
+
+ld norma(vector<ld> iter1, vector<ld> iter2) //разность векторов
+{
+	ld eps = 0.0; 
+	for(int i = 0; i < iter1.size(); i++)
+	{
+		if(!isnan(iter1[i]) && !isnan(iter2[i]))
+			eps += std::fabs(iter1[i] - iter2[i]);
+	}
+	return eps;
+}
+
+vector<ld> normal(const vector<ld> y) //нормирование вектора
+{
+	ld norma = 0.0;
+	for(int i = 0; i < y.size(); i++)
+	{
+		norma += y[i] * y[i];
+	}
+	norma = std::pow(norma, 0.5);
+	std::vector<ld> v;
+	for(int i = 0; i < y.size(); i++)
+	{
+		v.push_back(y[i] / norma);
+	}
+	/*cout << "normal_v\n";
+	for(int i = 0; i < y.size();i++)
+		cout << y[i] << " ";
+	cout << endl;*/
+	return v;
+}
+
+vector<ld> div(const vector<ld> y, const vector<ld> x) //деление векторов
+{
+	vector<ld> res;
+	for(int i = 0; i < y.size(); i++)
+	{
+		if( x[i] != 0)
+			res.push_back(y[i] / x[i]);
+		else
+			res.push_back(0.0 / 0.0);
+	}
+	return res;	
+}
+
+
+
+
+pair<ld, vector<ld>> pmAlgorythm(const Mat& A0, const vector<ld> svobChleny) //собсна алгоритм
+{
+	vector <ld> lambda_prev(svobChleny.size());
+	auto y0 = svobChleny;
+	auto x0 = normal(y0);
+	auto y1 = unmMatNaVec(A0, x0);
+	auto lambda_current = div(y1, x0);
+	while(norma(lambda_current, lambda_prev) > 0.000001)
+	{
+
+		y0 = y1;
+		x0 = normal(y0);
+		y1 = unmMatNaVec(A0, x0);
+		lambda_prev = lambda_current;
+		lambda_current = div(y1, x0);
+	}
+	x0 = normal(y1);
+	ld res = 0.0;
+	int count = 0;
+	for (int i = 0; i < lambda_current.size(); i++)
+	{
+		if (lambda_current[i] != 0.0 / 0.0)
+		{
+			res += lambda_current[i];
+			count++;
+		}
+	}
+	if(count == 0)
+	{
+		std::cout << "Shit:(" << std::endl;
+	}
+	else 
+	{
+		std::cout << "eigenval: ";
+		std::cout << res / count << std::endl;
+		std::cout << "eigenvec: \n";
+		for(int i = 0; i < x0.size(); i++)
+			std::cout << x0[i] << " ";
+		std::cout << std::endl<<endl;
+		auto lll =  std::make_pair(res / count, x0);
+		std::vector<ld> v = svobChleny;
+		for(int i = 0; i < 10; i++)
+		{
+			v = unmMatNaVec(A0, v);
+		}
+		auto v1 = unmMatNaVec(A0, v);
+		auto v2 = unmMatNaVec(A0, v1);
+		vector<ld> y2(v2.size());
+		for(int i = 0; i < y2.size(); i++)
+		{
+		 	y2[i] = (v2[i] - (res / count) * v1[i]) / (v1[i] - (res / count) * v[i]); 
+		}
+
+		return lll;
+		// auto y2 = unmMatNaVec(A0, x0);
+		// vector<ld> v(y2.size());
+		// std::cout << "vectors" << std::endl;
+		// print_v(y0);
+		// print_v(y1);
+		// print_v(y2);
+		// std::cout << "here!!!\n";
+		// for(int i = 0; i < y2.size(); i++)
+		// {
+		// 	v[i] = (y2[i] - (res / count) * y1[i]) / (y1[i] - (res / count) * y0[i]); 
+		// }
+		// res = 0.0;
+		// count = v.size();
+		// for(int i = 0; i < v.size(); i++)
+		// {
+		// 	cout << v[i];
+		// 	res += v[i]; 
+		// }
+		// std::cout << "Second" << res << std::endl;
+	}
+	pair<ld, vector<ld>> l;
+	return l;
+} 
+
+// vector<pair<ld, vector<ld>>> powMethod(const Mat& A0, const vector<ld> svobChleny){
+// 	vector<pair<ld, vector<ld>>> res(0);
+// 	pair<ld, vector<ld>> res1(0, vector<ld>(0));
+// 	pair<ld, vector<ld>> res2(0, vector<ld>(0));
+// 	ld eps = 1e-5;
+
+// 	Mat A = A0;
+// 	vector<ld> y0 = svobChleny;
+// 	vector<ld> y1(y0.size(),0);
+
+	
+
+// 	bool done = false;
+
+// 	ld y_k_prev_iter = 0;
+// 	ld y_k = 0;
+
+// 	ld a_plus_1 = 1;
+// 	ld a = 1;
+// 	ld a_minus_1 = 1;
+
+// 	vector<ld> temp_cont(0);
+
+// 	int counter = 0;
+// 	done = false;
+// 	while(!done){
+// 	// while(fabs(a - y_k * a_minus_1) > eps){
+// 		// cout << "fabs: " << fabs(a - y_k * a_minus_1) << endl;
+// 		counter++;
+// 		if(counter > 31){
+// 			done = true;
+// 		}
+// 		y1 = unmMatNaVec(A, y0);
+
+// 		y_k = y1[0] / y0[0];
+// 		// cout<<"y_k = "<< y_k<<endl<<endl;
+// 		a_minus_1 = a;
+// 		a = a_plus_1;
+// 		a_plus_1 = y0[0];
+
+// 		ld temp = (a_plus_1 - (y_k * a)) / (a - (y_k * a_minus_1));
+
+
+// 		// cout << "(" << a_plus_1 << " - " << y_k << " * " << a << ") / (" << a << " - " << y_k << " * " << a_minus_1 << ")" << endl;
+// 		// cout << "temp: " << temp << endl;
+
+// 		temp_cont.push_back(temp);
+
+// 		y0 = y1;
+// 	}
+
+// 	y0 = svobChleny;
+// 	done = false;
+// 	y_k_prev_iter = 0;
+// 	while(!done){
+// 		// cout << "iter: " << counter << endl;
+
+// 		y1 = unmMatNaVec(A, y0);
+// 				for (int i = 0; i < y1.size(); ++i)
+// 		y_k = y1[0] / y0[0];
+
+// 		// cout<<"y1 = ";
+// 		// for (int i = 0; i < y1.size(); ++i)
+// 		// {
+// 		// 	cout<<y1[i]<<" ";		
+// 		// }
+// 		// cout<<endl;
+// 		// cout<<"y0 = ";
+// 		// for (int i = 0; i < y0.size(); ++i)
+// 		// {
+// 		// 	cout<<y0[i]<<" ";		
+// 		// }
+// 		// cout<<endl<<endl;
+
+// 		if(fabs(y_k - y_k_prev_iter) < eps){
+// 			done = true;
+// 			// break;
+// 		}
+// 		y_k_prev_iter = y_k;		
+// 		y0 = y1;
+// 	}
+
+// 	for(int i = 0; i < y1.size(); ++i){
+// 		y1[i] = y1[i] / y1[y1.size() - 1];
+// 	}
+
+// 	res1.first = y_k;
+
+// 	// y0 = svobChleny;
+// 	// y1 = 
+// 	// while(!done)
+// 	// {
+
+// 	// }
+
+// 	// res1.second = y1;
+
+// 	// res2.first = (a_plus_1 - (res1.first * a)) / (a - (res1.first * a_minus_1));
+// 	ld temp = 0;
+// 	for(int i = 0; i < temp_cont.size(); ++i){
+// 		// cout << "temp += " << temp_cont[i] << endl;
+// 		temp += temp_cont[i];
+// 	}
+// 	// cout << temp << " / " << temp_cont.size() << endl;
+// 	res2.first = temp / temp_cont.size();
+// 	res2.second = methodGauss(A, res2.first);
+
+// 	res.push_back(res1);
+// 	res.push_back(res2);
+
+// 	return res;
+// }
+
 vector<pair<ld, vector<ld>>> powMethod(const Mat& A0, const vector<ld> svobChleny){
 	vector<pair<ld, vector<ld>>> res(0);
 	pair<ld, vector<ld>> res1(0, vector<ld>(0));
@@ -311,6 +558,8 @@ vector<pair<ld, vector<ld>>> powMethod(const Mat& A0, const vector<ld> svobChlen
 	Mat A = A0;
 	vector<ld> y0 = svobChleny;
 	vector<ld> y1(y0.size(),0);
+
+	
 
 	bool done = false;
 
@@ -326,6 +575,7 @@ vector<pair<ld, vector<ld>>> powMethod(const Mat& A0, const vector<ld> svobChlen
 	int counter = 0;
 	done = false;
 
+
 	y0 = svobChleny;
 	done = false;
 	y_k_prev_iter = 0;
@@ -333,8 +583,21 @@ vector<pair<ld, vector<ld>>> powMethod(const Mat& A0, const vector<ld> svobChlen
 		// cout << "iter: " << counter << endl;
 
 		y1 = unmMatNaVec(A, y0);
-
+				for (int i = 0; i < y1.size(); ++i)
 		y_k = y1[0] / y0[0];
+
+		// cout<<"y1 = ";
+		// for (int i = 0; i < y1.size(); ++i)
+		// {
+		// 	cout<<y1[i]<<" ";		
+		// }
+		// cout<<endl;
+		// cout<<"y0 = ";
+		// for (int i = 0; i < y0.size(); ++i)
+		// {
+		// 	cout<<y0[i]<<" ";		
+		// }
+		// cout<<endl<<endl;
 
 		if(fabs(y_k - y_k_prev_iter) < eps){
 			done = true;
@@ -355,10 +618,17 @@ vector<pair<ld, vector<ld>>> powMethod(const Mat& A0, const vector<ld> svobChlen
 
 
 	res1.first = y_k;
+
+	// y0 = svobChleny;
+	// y1 = 
+	// while(!done)
+	// {
+
+	// }
+
 	res1.second = y1;
 
-	ld temp = (a_plus_1 - (res1.first * a)) / (a - (res1.first * a_minus_1));
-	res2.first = temp;
+
 	res2.second = methodGauss(A, res2.first);
 
 	res.push_back(res1);

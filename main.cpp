@@ -41,15 +41,62 @@ int main(){
 	print(methodGaussJordan(m2));
 	cout << endl;
 	// powMethod(m2, m2.svobChleny);
+
+
+	auto a = pmAlgorythm(m2, m2[0]);
+	Mat m_shit(m2.dim);
+	vector<ld> x(m2.dim);
+	for(int i = 0; i < x.size(); i++)
+	{
+		x[i] += 1.0 / (a.first * a.second[1]) * m2[1][i];
+	}
+
+	for(int i = 0; i < m_shit.dim; i++)
+	{
+		for(int j = 0; j < m_shit.dim; j++)
+		{
+			if(i == j)
+			{
+				m_shit[i][j] = m2[i][j]  - a.first * a.second[i] * x[i];
+			}
+			else
+			{
+				m_shit[i][j] = m2[i][j] - a.first * a.second[i] * x[j];
+			}
+		}
+	}
+
+
+	auto b = pmAlgorythm(m_shit, m_shit[0]);
+	
+	vector<long double> vec(b.second.size());
+	long double ll = 0.0;
+	for(int i = 0; i < b.second.size(); i++)
+	{
+		ll += b.second[i] * a.second[i];
+	}
+	for(int i = 0; i < vec.size(); i++)
+	{
+		vec[i] = (b.first - a.first) * b.second[i] + a.first * ll * a.second[i];
+	}
+	// std::cout << "vec2\n";
+	// for(int i = 0; i < vec.size(); i++)
+	// {
+	// 	std::cout << vec[i] << " ";
+	// }
+	std::cout << std::endl;
 	auto p = powMethod(m2, m2[0]);
 	cout << "sobs ch 1: " << p[0].first << endl;
 	cout << "sobs vec 1: " << endl;
-	print(p[0].second);
+	auto ot = normal(p[0].second);
+	print(ot);
 	cout << endl;
 
-	cout << "sobs ch 2: " << p[1].first << endl;
+	p = powMethod(m_shit, m_shit[0]);
+	cout << "sobs ch 2: " << p[0].first << endl;
 	cout << "sobs vec 2: " << endl;
-	print(p[1].second);
+	ot = normal(p[0].second);
+	print(ot);
 	cout << endl;
 	// end 2 lab
 
