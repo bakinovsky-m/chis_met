@@ -37,6 +37,7 @@ Mat swapRows(const Mat& m, const int ind1, const int ind2);
 
 void print(const Mat m);
 void print(const std::vector<ld> vec);
+void print_v(std::vector<ld>);
 
 ld getDeterminant(const Mat old_matr);
 Mat getMWithoutIJ(const Mat mas, const int i, const int j);
@@ -46,6 +47,8 @@ std::vector<ld> relaxation(const Mat A, const ld parameter);
 void LUdecompos(const Mat A, Mat &L, Mat &U);
 
 // std::pair<ld, std::vector<ld>> powMethod(const Mat& A, const std::vector<ld> svobChleny);
+std::pair<ld, std::vector<ld>> pmAlgorythm(const Mat& A, const std::vector<ld> svobChleny);
+
 std::vector<std::pair<ld, std::vector<ld>>> powMethod(const Mat& A, const std::vector<ld> svobChleny);
 std::vector<ld> unmMatNaVec(const Mat& A, const std::vector<ld>& vec);
 std::vector<ld> methodGauss(const Mat& A0, const ld l);
