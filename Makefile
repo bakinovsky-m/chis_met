@@ -1,5 +1,5 @@
 SOURCES = main.cpp header.cpp
-CXX_FLAGS += -g
+CXX_FLAGS += -g -Wall -Wextra -Wpedantic
 
 all: compile
 	./build/main

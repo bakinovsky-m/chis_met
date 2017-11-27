@@ -49,4 +49,6 @@ void LUdecompos(const Mat A, Mat &L, Mat &U);
 std::vector<std::pair<ld, std::vector<ld>>> powMethod(const Mat& A, const std::vector<ld> svobChleny);
 std::vector<ld> unmMatNaVec(const Mat& A, const std::vector<ld>& vec);
 std::vector<ld> methodGauss(const Mat& A0, const ld l);
+
+Mat umnMat(const Mat & m1, const Mat & m2);
 #endif

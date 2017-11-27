@@ -393,3 +393,16 @@ vector<ld> methodGauss(const Mat& A0, const ld l){
 
 	return res;
 }
+
+Mat umnMat(const Mat & m1, const Mat & m2){
+	Mat temp = m1;
+	for(int i = 0; i < m1.dim; ++i){
+		for(int j = 0; j < m1.dim; ++j){
+			temp.mat[i][j] = 0;
+			for(int k = 0; k < m1.dim; ++k){
+				temp.mat[i][j] += m1.mat[i][k] * m2.mat[k][j];
+			}
+		}
+	}
+	return temp;
+}

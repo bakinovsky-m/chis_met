@@ -48,7 +48,41 @@ int main(){
 	// end 2 lab
 
 	// 3 lab 
+	Mat m3;
+	m3.fillFromFile("tests/for_third.txt");
 
+	cout << "3 zadanie" << endl;
+	print(m3);
+	Mat L = Mat(m3.dim);
+	Mat U = Mat(m3.dim);
+
+	LUdecompos(m3, L, U);
+
+	double eps = 1e-9;
+
+	double pogr = 100;
+	Mat temp = m3;
+	Mat a1 = m3;
+	while(abs(pogr) > eps) {
+		LUdecompos(a1, L, U);
+		temp = a1;
+		a1 = umnMat(U, L);
+
+		pogr = temp.mat[0][0] - a1.mat[0][0];
+	}
+
+	cout << endl;
+
+	for (int i = 0; i < temp.dim; ++i) {
+		for (int j = 0; j < temp.dim; ++j) {
+			if (i == j){
+				cout << "sobs chislo: " << temp.mat[i][j] << endl;
+				auto sobs_vec = methodGauss(m3, temp.mat[i][j]);
+				print(sobs_vec);
+				cout << endl;
+			}
+		}
+	}
 	// end 3 lab
 	return 0;
 }
