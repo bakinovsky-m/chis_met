@@ -15,8 +15,7 @@ int main(){
 	cout << endl;
 
 	cout << "Kramer:" << endl;
-	// cout << "res: " << endl;
-	for(int i = 0; i < res.size(); ++i){
+	for(unsigned int i = 0; i < res.size(); ++i){
 		cout << res[i] << " ";
 	}
 	cout << endl;
@@ -24,7 +23,7 @@ int main(){
 
 	res = relaxation(m1, 1.1);
 	cout << "Relaxation: " << endl;
-	for(int i = 0; i < res.size(); ++i){
+	for(unsigned int i = 0; i < res.size(); ++i){
 		cout << res[i] << " ";
 	}
 	cout << endl;
@@ -40,17 +39,12 @@ int main(){
 	cout << "Obratnaya: " << endl;
 	print(methodGaussJordan(m2));
 	cout << endl;
-	// powMethod(m2, m2.svobChleny);
 	auto p = powMethod(m2, m2[0]);
 	cout << "sobs ch 1: " << p[0].first << endl;
 	cout << "sobs vec 1: " << endl;
 	print(p[0].second);
 	cout << endl;
 
-	cout << "sobs ch 2: " << p[1].first << endl;
-	cout << "sobs vec 2: " << endl;
-	print(p[1].second);
-	cout << endl;
 	// end 2 lab
 
 	// 3 lab 

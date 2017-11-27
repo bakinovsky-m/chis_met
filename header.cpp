@@ -49,7 +49,6 @@ void Mat::resize(int d){
 }
 
 void Mat::fillFromFile(std::string sstr){
-	const char * str = sstr.c_str();
 	int dim = 123;
 	ifstream fin(sstr, ifstream::in);
 	fin >> dim;
@@ -160,7 +159,7 @@ void print(const Mat m){
 }
 
 void print(const vector<ld> vec){
-	for (int i = 0; i < vec.size(); ++i){
+	for (unsigned int i = 0; i < vec.size(); ++i){
 		cout << vec[i] << " ";
 	}
 	cout << endl;
@@ -183,14 +182,13 @@ vector<ld> kramer(const Mat matr){
 
 ld getDeterminant(const Mat old_matr) {
 	int dim = old_matr.dim;
-    int k, n;
+    int k = 0;
     Mat new_matr = Mat();
     new_matr.resize(dim);
     for (int i = 0; i < dim; i++)
       new_matr[i].resize(dim);
     int det = 0;
     k = 1; //(-1) в степени i
-    n = dim - 1;
     if (dim < 1) cout << "Определитель вычислить невозможно!";
     if (dim == 1) {
       det = old_matr[0][0];
@@ -317,52 +315,30 @@ vector<pair<ld, vector<ld>>> powMethod(const Mat& A0, const vector<ld> svobChlen
 	ld y_k_prev_iter = 0;
 	ld y_k = 0;
 
-	ld a_plus_1 = 1;
-	ld a = 1;
-	ld a_minus_1 = 1;
-
-	vector<ld> temp_cont(0);
-
-	int counter = 0;
-	done = false;
-
-	y0 = svobChleny;
-	done = false;
 	y_k_prev_iter = 0;
-	while(!done){
-		// cout << "iter: " << counter << endl;
 
+	while(!done){
 		y1 = unmMatNaVec(A, y0);
 
 		y_k = y1[0] / y0[0];
 
 		if(fabs(y_k - y_k_prev_iter) < eps){
 			done = true;
-			// break;
 		}
-		y_k_prev_iter = y_k;
 
-		a_minus_1 = a;
-		a = a_plus_1;
-		a_plus_1 = y0[0];
+		y_k_prev_iter = y_k;
 
 		y0 = y1;
 	}
 
-	for(int i = 0; i < y1.size(); ++i){
+	for(unsigned int i = 0; i < y1.size(); ++i){
 		y1[i] = y1[i] / y1[y1.size() - 1];
 	}
-
 
 	res1.first = y_k;
 	res1.second = y1;
 
-	ld temp = (a_plus_1 - (res1.first * a)) / (a - (res1.first * a_minus_1));
-	res2.first = temp;
-	res2.second = methodGauss(A, res2.first);
-
 	res.push_back(res1);
-	res.push_back(res2);
 
 	return res;
 }
