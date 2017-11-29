@@ -10,7 +10,7 @@ int main(){
 	m1.fillFromFile("tests/for_first.txt");
 	vector<ld> res = kramer(m1);
 
-	cout << "1 zadanie" << endl;
+	cout << "!!! 1 zadanie !!!" << endl;
 	print(m1);
 	cout << endl;
 
@@ -27,7 +27,7 @@ int main(){
 	Mat m2;
 	m2.fillFromFile("tests/for_second.txt");
 
-	cout << endl << "2 zadanie" << endl;
+	cout << endl << "!!! 2 zadanie !!!" << endl << endl;
 	print(m2);
 	cout << endl;
 	cout << "Obratnaya: " << endl;
@@ -44,14 +44,14 @@ int main(){
 	Mat m3;
 	m3.fillFromFile("tests/for_third.txt");
 
-	cout << "3 zadanie" << endl;
+	cout << "!!! 3 zadanie !!!" << endl << endl;
 	print(m3);
 	Mat L = Mat(m3.dim);
 	Mat U = Mat(m3.dim);
 
 	LUdecompos(m3, L, U);
 
-	double eps = 1e-9;
+	double eps = 1e-15;
 
 	double pogr = 100;
 	Mat temp = m3;
@@ -71,7 +71,7 @@ int main(){
 			if (i == j){
 				cout << "sobs chislo: " << temp.mat[i][j] << endl;
 				auto sobs_vec = methodGauss(m3, temp.mat[i][j]);
-				print(sobs_vec);
+				print(normal(sobs_vec));
 				cout << endl;
 			}
 		}

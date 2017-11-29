@@ -405,3 +405,18 @@ Mat umnMat(const Mat & m1, const Mat & m2){
 	}
 	return temp;
 }
+
+vector<ld> normal(const vector<ld> y){
+	ld norma = 0.0;
+	for(int i = 0; i < y.size(); i++)
+	{
+		norma += y[i] * y[i];
+	}
+	norma = std::pow(norma, 0.5);
+	std::vector<ld> v;
+	for(int i = 0; i < y.size(); i++)
+	{
+		v.push_back(y[i] / norma);
+	}
+	return v;
+}
