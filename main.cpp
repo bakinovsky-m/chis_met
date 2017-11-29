@@ -15,18 +15,12 @@ int main(){
 	cout << endl;
 
 	cout << "Kramer:" << endl;
-	for(unsigned int i = 0; i < res.size(); ++i){
-		cout << res[i] << " ";
-	}
-	cout << endl;
+	print(res);
 	cout << endl;
 
 	res = relaxation(m1, 1.1);
 	cout << "Relaxation: " << endl;
-	for(unsigned int i = 0; i < res.size(); ++i){
-		cout << res[i] << " ";
-	}
-	cout << endl;
+	print(res);
 	// end 1 lab
 
 	// 2 lab
@@ -40,11 +34,10 @@ int main(){
 	print(methodGaussJordan(m2));
 	cout << endl;
 	auto p = powMethod(m2, m2[0]);
-	cout << "sobs ch 1: " << p[0].first << endl;
-	cout << "sobs vec 1: " << endl;
+	cout << "sobs ch: " << p[0].first << endl;
+	cout << "sobs vec: " << endl;
 	print(p[0].second);
 	cout << endl;
-
 	// end 2 lab
 
 	// 3 lab 

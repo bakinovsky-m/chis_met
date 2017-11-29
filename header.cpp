@@ -160,9 +160,8 @@ void print(const Mat m){
 
 void print(const vector<ld> vec){
 	for (unsigned int i = 0; i < vec.size(); ++i){
-		cout << vec[i] << " ";
+		cout << vec[i] << endl;
 	}
-	cout << endl;
 }
 
 vector<ld> kramer(const Mat matr){
@@ -188,8 +187,8 @@ ld getDeterminant(const Mat old_matr) {
     for (int i = 0; i < dim; i++)
       new_matr[i].resize(dim);
     int det = 0;
-    k = 1; //(-1) в степени i
-    if (dim < 1) cout << "Определитель вычислить невозможно!";
+    k = 1; 
+    if (dim < 1) cout << "No determinant for you!";
     if (dim == 1) {
       det = old_matr[0][0];
       return(det);
@@ -234,12 +233,12 @@ Mat getMWithoutIJ(const Mat matr, const int i_ind, const int j_ind) {
     Mat p;
 	p.resize(dimension);
 
-    for (int ki = 0; ki < dimension; ki++) { // проверка индекса строки
+    for (int ki = 0; ki < dimension; ki++) {
         if (ki == i_ind) {
         	iOffset = 1;
         }
         jOffset = 0;
-        for (int kj = 0; kj < dimension; kj++) { // проверка индекса столбца
+        for (int kj = 0; kj < dimension; kj++) {
             if (kj == j_ind) {
             	jOffset = 1;
             }
